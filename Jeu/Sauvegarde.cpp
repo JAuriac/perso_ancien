@@ -169,8 +169,33 @@ int Sauvegarde::indexFromString(string s)
 	}
 	return retour;
 }
-/*char* Sauvegarde::ListLetters()
+char* Sauvegarde::ListLetters()
 {
-	char*[] a = {};
-	return a;
-}*/
+	vector<string> vect;
+	char* p;
+	char listOfLetters[28];
+	p = listOfLetters;
+
+	for (int index = 0; index < 100; index++)
+	{
+		if (inventaire_[index][1] == "1")
+		{
+			vect.push_back(inventaire_[index][0]);
+		}
+	}
+
+	for (int jndex = 0; jndex < vect.size(); jndex++)
+	{
+		for (char& c : vect[jndex])
+		{
+			for (int i = 0; i < sizeof(listOfLetters); i++) 
+			{
+				if (listOfLetters[i] == c) {
+					break;
+				}
+			}
+		}
+	}
+	
+	return p;
+}

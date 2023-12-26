@@ -33,7 +33,7 @@ public:
 	//mettre if else pour changer le texte de main bleue
 	void setInvZero(int a) { inventaire_[a - 1][1] = "0"; cout << "Vous perdez alors votre " + inventaire_[a - 1][0] + "." << endl; }
 	int indexFromString(string s);
-	//char* ListLetters();
+	char* ListLetters();
 private:
 	string nom;
 	int nbEssai;

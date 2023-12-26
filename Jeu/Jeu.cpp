@@ -78,14 +78,14 @@ void OutputText(string s)
 		int spaceCount = 0;
 
 		// Add whitespace if newline detected.
-		/*if (c == '\n')
+		if (c == '\n')
 		{
 			int charNumOnLine = ((i) % bufferWidth);
 			spaceCount = bufferWidth - charNumOnLine;
 			s.insert((i - 1), (spaceCount), ' ');
 			i += (spaceCount);
 			continue;
-		}*/
+		}
 
 		if ((i % bufferWidth) == 0)
 		{
@@ -478,14 +478,28 @@ void deite() //Punition pour event 20 à 29
 {
 	cout << "Alors que vous luttez pour prendre des repères dans cet endroit entièrement sombre, un écho se fait entendre, suivi par l'apparition d'une faible lueur verte." << endl;
 	Sleep(3000);
-	cout << "" << endl; // Bas-relief
+	cout << "Devant vous se trouve un bas-relief imposant, couvrant l'entièreté du mur vous faisant face. Cette salle est une salle rectangulaire aux proportions démesurées, que ce soit dans sa hauteur, ou dans sa largeur dont vous ne pouvez pas apercevoir les extremités dans l'obscurité." << endl; // Bas-relief
+	string s =
+		"Devant vous se trouve un bas-relief imposant, couvrant l'entièreté du mur vous faisant face. Cette salle est une salle rectangulaire aux proportions démesurées, que ce soit dans sa hauteur, ou dans sa largeur dont vous ne pouvez pas apercevoir les extremités dans l'obscurité. "
+		"La lueur verte, qui se trouve à votre exacte opposé dans le mur du bas-relief, est bientôt rejointe par ce qui semble être une infinité d'autres, et vous commencez à apercevoir les contours des formes qui compose cette sculpture. "
+		"Malgré le manque de contraste originellement présent, et l'usure avancée qui semble être attribuée à l'âge, vous parvenez maintenant à discerner de nombreuses représentations différentes d'animaux, de traits très disparates, comme si autant d'individus avaient participés à cette scupture. "
+		"De plus, vous remarquez que des phrases dans une langue qui vous est inconnue soulignent les représentations de certains animaux. "
+		"Un changement dans l'intensité des lueurs met en surbrillance certaines lettres de ces phrases, toujours la même.";
+	OutputText(s);
+
 	//Lire inventaire -> Créer liste de toutes les lettres existantes
 	//ListOfLetters();
 	//Choisir une lettre au hasard dans cette liste (qui n'a pas déjà été choisie)
 	//GetLetter();
 	//Énigme avec cette lettre, choisir un objet dont se débarasser avec cette lettre, ou perdre un objet aléatoirement
+
+	string s1 =
+		"Un autel, que vous n'aviez pas remarqué jusque là en dépit de sa proximité, attire maintenant votre œil. Sa structure est ovale, et il repose sur un lourd socle de pierre marbré. Il est imprégné d'un liquide ocre, épais et visqueux. "
+		"\n\nQue voulez vous faire ? \n\n\t1. Ajouter une bille dans le vase. \n\t2. Retirer une bille du vase. \n\t3. Ajouter cinq billes dans le vase. \n\t4. Ajouter dix billes dans le vase. \n\t5. Prendre une poignée de billes dans votre sac. \n\t6. Briser le vase. \n\t7. Repartir.";
+	OutputText(s1);	
+	
 	//GetRiddle();
-	//Répéter trois fois
+	//Répéter trois fois, à mesure que l'air se fait plus épais et étouffant (sinon épais à chercher, opaque)
 	// --------------------------------------------------------------
 }
 void etroit()
@@ -549,9 +563,9 @@ void mort()
 	int nombre = 0;
 	bool résolu = false;
 	string s =
-		"Cet endroit semble vouloir vous empêcher d'avancer, et vos sens vous paraissent embués. Vous vous trouvez maintenant dans une salle si petite que vous peindez à tenir debout. Le sol de cette salle est jonché de billes parfaitement ronde, grise, chromées, et au milieu de la salle se trouve un vase transparent en forme de goutte."
-		"Bouger n'importe quelle bille de cette salle, et un bourdonnement brise le silence. Chaque bille bougée ajoute un nouveau bourdonnement continu au fond sonore. Le vase est actuellement vide. Il semblerait que vous ne pouvez sortir de cette salle que par le chemin qui vous y a amené."
-		"Que voulez vous faire ? \n\t1. Ajouter une bille dans le vase. \n\t2. Retirer une bille du vase. \n\t3. Ajouter cinq billes dans le vase. \n\t4. Ajouter dix billes dans le vase. \n\t5. Prendre une poignée de billes dans votre sac. \n\t6. Briser le vase. \n\t7. Repartir.";
+		"Cet endroit semble vouloir vous empêcher d'avancer, et vos sens vous paraissent embués. Vous vous trouvez maintenant dans une salle si petite que vous peindez à tenir debout. Le sol de cette salle est jonché de billes parfaitement ronde, grise, chromées, et au milieu de la salle se trouve un vase transparent en forme de goutte. "
+		"Bouger n'importe quelle bille de cette salle, et un bourdonnement brise le silence. Chaque bille bougée ajoute un nouveau bourdonnement continu au fond sonore. Le vase est actuellement vide. Il semblerait que vous ne pouvez sortir de cette salle que par le chemin qui vous y a amené. "
+		"\n\nQue voulez vous faire ? \n\n\t1. Ajouter une bille dans le vase. \n\t2. Retirer une bille du vase. \n\t3. Ajouter cinq billes dans le vase. \n\t4. Ajouter dix billes dans le vase. \n\t5. Prendre une poignée de billes dans votre sac. \n\t6. Briser le vase. \n\t7. Repartir.";
 	OutputText(s);
 	cin >> choix;
 	while (!(choix == "7"))
@@ -1049,14 +1063,19 @@ int main()
 			system("cls");
 			isGood++;
 		}
+		if (!isSave() && isGood == 0)
+		{
+			system("cls");
+			isGood++;
+		}
 		if (isGood == 0) { break; }
 		cout << "Quel est le nom de la sauvegarde à charger ? ex : SauvegardeBis.txt" << endl;
 		string str;
-		cin >> str;
+		cin >> str; //attention à bien mettre l'extension .txt
 		const char* cstr = strToChar(str);
 		rename(cstr, "Sauvegarde.txt");
 		saveToGame();
-		break;
+		//break;
 	}	
 	case 'S':
 	{
@@ -1119,6 +1138,7 @@ int main()
 		sauv.afficherInvDet();
 		mort();
 		sauv.afficherInvDet();
+		sauv.afficherInvDet();
 
 		//sourdV2(); //OutputText
 
@@ -1154,3 +1174,4 @@ int main()
 }
 
 //sauvegarde corrompu en ajoutant de nouveaux objets ? -> résolu parce qu'en plus des deux constructeurs il faut changer la liste d'inventaire d'initialisation initInv
+//torche qui fait avancer plus vite ?
