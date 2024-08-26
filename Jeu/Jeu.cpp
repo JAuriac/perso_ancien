@@ -12,6 +12,7 @@
 #include <Mmsystem.h>
 #include <mciapi.h>
 #include <array>
+#include <sstream>
 #pragma comment(lib, "Winmm.lib")
 using namespace std;
 #include "Sauvegarde.h"
@@ -122,6 +123,12 @@ bool vérifierRéponse(const string& réponse, const string& choix)
 {
 	string lowerStr1 = ConvertToLowercase(réponse);
 	string lowerStr2 = ConvertToLowercase(choix);
+	bool check = false;
+	std::stringstream ss(lowerStr2);
+	for (istream_iterator w = istream_iterator<string>(ss); w != istream_iterator<string>(); w++) {
+		//string& word = *w;
+		if (lowerStr1.contains(*w)) { check = true; }
+	}
 	//if (ConvertToLowercase(réponse).find(ConvertToLowercase(choix)) != std::string::npos) {
 	//if (lowerStr1.find(lowerStr2) != std::string::npos) {
 	//	std::cout << "found!" << '\n';
@@ -129,8 +136,9 @@ bool vérifierRéponse(const string& réponse, const string& choix)
 	//}
 	//else return false;
 
-	return lowerStr1.find(lowerStr2) != std::string::npos;
-	//return lowerStr1.contains(lowerStr2) != std::string::npos;
+	//return lowerStr1.find(lowerStr2) != std::string::npos;
+	//return lowerStr1.contains(lowerStr2);
+	return check;
 }
 /*char* ListOfLetters()
 {
@@ -1207,33 +1215,33 @@ int main()
 
 		//menteur();
 		bool w = false;
-		if (vérifierRéponse("Menteur", "Menteur")) { w = true; }
+		if (vérifierRéponse("Menteur", "Menteur")) { w = true; }		//true
 		else { w = false; }
-		cout << w << endl;
-		if (vérifierRéponse("Menteur", "menteur")) { w = true; }
+		cout << "Menteur" << w << endl;
+		if (vérifierRéponse("Menteur", "menteur")) { w = true; }		//true
 		else { w = false; }
-		cout << w << endl;
-		if (vérifierRéponse("Un menteur", "Un menteur")) { w = true; }
+		cout << "menteur" << w << endl;
+		if (vérifierRéponse("Un menteur", "Un menteur")) { w = true; }	//true
 		else { w = false; }
-		cout << w << endl;		
-		if (vérifierRéponse("Menteur", "Un menteur")) { w = true; }
+		cout << "Un menteur" << w << endl;
+		if (vérifierRéponse("Menteur", "Un menteur")) { w = true; }		//true
 		else { w = false; }
-		cout << w << endl;
-		if (vérifierRéponse("Menteur", "Un Menteur")) { w = true; }
+		cout << "Un menteur" << w << endl;
+		if (vérifierRéponse("Menteur", "Un Menteur")) { w = true; }		//true
 		else { w = false; }
-		cout << w << endl;
-		if (vérifierRéponse("Menteur", "le menteur")) { w = true; }
+		cout << "Un Menteur" << w << endl;
+		if (vérifierRéponse("Menteur", "le menteur")) { w = true; }		//true
 		else { w = false; }
-		cout << w << endl;
-		if (vérifierRéponse("Menteur", "test")) { w = true; }
+		cout << "le menteur" << w << endl;
+		if (vérifierRéponse("Menteur", "test")) { w = true; }			//false
 		else { w = false; }
-		cout << w << endl;
-		if (vérifierRéponse("Menteur", "menteur le")) { w = true; }
+		cout << "test" << w << endl;
+		if (vérifierRéponse("Menteur", "menteur le")) { w = true; }		//true
 		else { w = false; }
-		cout << w << endl;
-		if (vérifierRéponse("Menteur", "le manteur")) { w = true; }
+		cout << "menteur le" << w << endl;
+		if (vérifierRéponse("Menteur", "le manteur")) { w = true; }		//false
 		else { w = false; }
-		cout << w << endl;
+		cout << "le manteur" << w << endl;
 
 		break;
 	}	
