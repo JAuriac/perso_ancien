@@ -107,6 +107,31 @@ void OutputText(string s)
 	// Output string to console
 	std::cout << s << std::endl;
 }
+static string ConvertToLowercase(const string& str)
+{
+	string result = "";
+
+	for (char ch : str) {
+		// Convert each character to lowercase using tolower
+		result += tolower(ch);
+	}
+
+	return result;
+}
+bool vérifierRéponse(const string& réponse, const string& choix)
+{
+	string lowerStr1 = ConvertToLowercase(réponse);
+	string lowerStr2 = ConvertToLowercase(choix);
+	//if (ConvertToLowercase(réponse).find(ConvertToLowercase(choix)) != std::string::npos) {
+	//if (lowerStr1.find(lowerStr2) != std::string::npos) {
+	//	std::cout << "found!" << '\n';
+	//	return true;
+	//}
+	//else return false;
+
+	return lowerStr1.find(lowerStr2) != std::string::npos;
+	//return lowerStr1.contains(lowerStr2) != std::string::npos;
+}
 /*char* ListOfLetters()
 {
 	sauv.ListLetters();
@@ -141,19 +166,22 @@ void afficheContour()
 void debut()
 {
 	system("cls");
-	cout << "Vous vous éveillez brusquement, réveillé par un froid intense.\n" << endl;
+	OutputText("Vous vous éveillez brusquement, réveillé par un froid intense.\n");
 	Sleep(2000);
-	cout << "Du sable.\nDu sable froid vous coule dessus depuis des orifices situés quatre mètres au dessus de vous.\n" << endl;
+	OutputText("Du sable.\nDu sable froid vous coule dessus depuis des orifices situés quatre mètres au dessus de vous.\n");
 	Sleep(2000);
-	cout << "Vous ne possédez aucuns repères ici, vous êtes désorienté.\nLa petite salle où vous vous trouvez est petite, carrée, et jonchée d'équipements.\n" << endl;
+	OutputText("Vous ne possédez aucuns repères ici, vous êtes désorienté.\nLa petite salle où vous vous trouvez est petite, carrée, et jonchée d'équipements.\n");
 	Sleep(2000);
-	cout << "Vous n'arrivez à discerner qu'une sortie à cette salle,\nsous la forme d'un renfoncement sombre situé deux mètres au dessus de vous,\ndans un mur." << endl;
+	OutputText("Vous n'arrivez à discerner qu'une sortie à cette salle,\nsous la forme d'un renfoncement sombre situé deux mètres au dessus de vous, dans un mur.");
 	Sleep(3000);
-	cout << "Vous comprenez rapidement que le débit du sable vous place en danger imminent,\net que vous n'aurez le temps de vous saisir que d'un objet avant de devoir fuir.\nVous remarquez alors que trois objets se démarquent du reste de la salle, des armes :\nUn glaive, une lance, et un arc enroulé d'un carquois." << endl;
-	if (sauv.getInvDisp(8) == true) { cout << "Non alarmé par le besoin d'une arme, dû à la présence de votre arme magique sur vous,\nvous prenez le temps de regarder plus consciencieusement les objets répartis dans la pièce,\n et remarquez maintenant la présence d'une torche en bon état, d'un vase empli de sable, et d'un ..." << endl; }
-	cout << "Que prendrez-vous ?\n\t1. Le glaive\n\t2. La lance\n\t3. L'arc";
-	if (sauv.getInvDisp(8) == true) { "\n\t4. La torche\n\t5. Le vase\n\t6. Le truc"; }
-	cout << endl;
+	OutputText("Vous comprenez rapidement que le débit du sable vous place en danger imminent,\net que vous n'aurez le temps de vous saisir que d'un objet avant de devoir fuir.\n\nVous remarquez alors que trois objets se démarquent du reste de la salle, des armes :\nUn glaive, une lance, et un arc enroulé d'un carquois.");
+	if (sauv.getInvDisp(8) == true) { OutputText("Non alarmé par le besoin d'une arme, dû à la présence de votre arme magique sur vous,\nvous prenez le temps de regarder plus consciencieusement les objets répartis dans la pièce,\n et remarquez maintenant la présence d'une torche en bon état, d'un vase empli de sable, et d'un ..."); }
+	//cout << "Que prendrez-vous ?\n\t1. Le glaive\n\t2. La lance\n\t3. L'arc";
+	string s = "\nQue prendrez-vous ?\n\t1. Le glaive\n\t2. La lance\n\t3. L'arc";
+	//if (sauv.getInvDisp(8) == true) { "\n\t4. La torche\n\t5. Le vase\n\t6. Le truc"; }
+	if (sauv.getInvDisp(8) == true) { s += "\n\t4. La torche\n\t5. Le vase\n\t6. Le truc"; }
+	//cout << endl;
+	OutputText(s);
 	string choix;
 	cin >> choix;
 	if (sauv.getInvDisp(8) == false)
@@ -161,8 +189,7 @@ void debut()
 		while (!(choix == "1" || choix == "2" || choix == "3"))
 		{
 			choix = "";
-			cout << "Que prendrez-vous ?\n\t1. Le glaive\n\t2. La lance\n\t3. L'arc";
-			cout << endl;
+			OutputText("Que prendrez-vous ?\n\t1. Le glaive\n\t2. La lance\n\t3. L'arc");
 			cin >> choix;
 		}
 	}
@@ -171,8 +198,7 @@ void debut()
 		while (!(choix == "1" || choix == "2" || choix == "3" || choix == "4" || choix == "5" || choix == "6"))
 		{
 			choix = "";
-			cout << "Que prendrez-vous ?\n\t1. Le glaive\n\t2. La lance\n\t3. L'arc\n\t4. La torche\n\t5. Le vase\n\t6. Le truc";
-			cout << endl;
+			OutputText("Que prendrez-vous ?\n\t1. Le glaive\n\t2. La lance\n\t3. L'arc\n\t4. La torche\n\t5. Le vase\n\t6. Le truc");
 			cin >> choix;
 		}
 	}
@@ -184,7 +210,7 @@ void debut()
 		if (choix == "5") { sauv.setInvUn(5); }
 		if (choix == "6") { sauv.setInvUn(6); }
 	}
-	cout << "Après vous en être emparé, vous ne tardez pas à sortir de la salle, de peur d'être enseveli, et vous vous engoufrez dans un long couloir sombre..." << endl;
+	OutputText("Après vous en être emparé, vous ne tardez pas à sortir de la salle, de peur d'être enseveli, et vous vous engoufrez dans un long couloir sombre...");
 	Sleep(3000);
 }
 void passerelle()
@@ -234,34 +260,34 @@ void passerelle()
 }
 void conservation()
 {
-	cout << "Après avoir dépassé une porte ouverte faite d'un bois vénérable, vous arrivez dans une petite salle, éclairée uniquement par un puit de lumière, où y culmine une lourde grille de fer.\nAu centre de la salle se trouve un petit autel sur lequel se trouve un linge de soie à l'aspect particulièrement raffiné.\nDe l'autre côté de la salle se trouve une porte semblable à la porte précédente, elle est elle aussi ouverte." << endl;
+	OutputText("Après avoir dépassé une porte ouverte faite d'un bois vénérable, vous arrivez dans une petite salle, éclairée uniquement par un puit de lumière, où y culmine une lourde grille de fer.\nAu centre de la salle se trouve un petit autel sur lequel se trouve un linge de soie à l'aspect particulièrement raffiné.\nDe l'autre côté de la salle se trouve une porte semblable à la porte précédente, elle est elle aussi ouverte.");
 	char choix;
 	string choixP = "1234";
 	do
 	{
-		cout << "Que voulez-vous faire ?\n\t1. Enrouler un de vos objets dans le linge, et partir avec.\n\t2. Poser un de vos objets sur le linge, et partir.\n\t3. Essayer d'escalader la paroi.\n\t4. Passer en ignorant l'autel.\n" << endl;
+		OutputText("Que voulez-vous faire ?\n\t1. Enrouler un de vos objets dans le linge, et partir avec.\n\t2. Poser un de vos objets sur le linge, et partir.\n\t3. Essayer d'escalader la paroi.\n\t4. Passer en ignorant l'autel.\n");
 		cin >> choix;
 	} while (!(choix == '1' || choix == '2' || choix == '3' || choix == '4'));
 	//while (!choixP.find(choix));
 	if (choix == '3')
 	{
-		cout << "Après quelques essais, vous arrivez rapidement à la conclusion que ni votre équipement, ni vos compétences, ne peuvent vous permettre d'atteindre le haut de ce puit." << endl;
+		OutputText("Après quelques essais, vous arrivez rapidement à la conclusion que ni votre équipement, ni vos compétences, ne peuvent vous permettre d'atteindre le haut de ce puit.");
 		choixP = "123";
 		do
 		{
-			cout << "Que voulez-vous faire ?\n\t1. Enrouler un de vos objets dans le linge, et partir avec.\n\t2. Poser un de vos objets sur le linge, et partir.\n\t3. Passer en ignorant l'autel.\n" << endl;
+			OutputText("Que voulez-vous faire ?\n\t1. Enrouler un de vos objets dans le linge, et partir avec.\n\t2. Poser un de vos objets sur le linge, et partir.\n\t3. Passer en ignorant l'autel.\n");
 			cin >> choix;
 		} while (!(choix == '1' || choix == '2' || choix == '3'));
 	}
 	if (choix == '1' || choix == '2')
 	{
-		cout << "Quel objet ?" << endl;
+		OutputText("Quel objet ?");
 		sauv.afficherInv();
 		string toInf;
 		cin >> toInf;
 		sauv.permanent(toInf, choix);
 	}
-	cout << "Dehors." << endl; //verbeux
+	OutputText("Dehors."); //verbeux
 	Sleep(3000);
 }
 void porte()
@@ -280,26 +306,26 @@ void porte()
 	//cout << "dir: " << dir << " tab: " << events[dir] << " 0: " << events[dir][0] << " 1: " << events[dir][1] << endl;
 	//cout << "dir: " << dirB << " tab: " << events[dirB] << " 0: " << events[dirB][0] << " 1: " << events[dirB][1] << endl;
 	//cout << "dir: " << dirT << " tab: " << events[dirT] << " 0: " << events[dirT][0] << " 1: " << events[dirT][1] << endl;
-	cout << "Vous sortez d'un couloir étroit, après avoir marché pendant quelques longues minutes, pour arriver à une grande salle, d'une vingtaine de mètres de largeur, éclairée uniquements à la lumière de quelques torches éparses." << endl;
+	OutputText("Vous sortez d'un couloir étroit, après avoir marché pendant quelques longues minutes, pour arriver à une grande salle, d'une vingtaine de mètres de largeur, éclairée uniquements à la lumière de quelques torches éparses.");
 	Sleep(3000);
-	cout << "Dans cette grande salle vide, vous apercevez trois portes, portant de gauche à droite les inscriptions \"" << events[dir][0] << "\", \"" << events[dirB][0] << "\" et \"" << events[dirT][0] << "\"." << endl;
+	OutputText("Dans cette grande salle vide, vous apercevez trois portes, portant de gauche à droite les inscriptions \"" + events[dir][0] + "\", \"" + events[dirB][0] + "\" et \"" + events[dirT][0] + "\".");
 	string choix;
 	//string choixP = "1234";
 	do
 	{
-		cout << "Que voulez-vous faire ?\n\t1. Passer par la porte de gauche.\n\t2. Passer par la porte du milieu.\n\t3. Passer par la porte de droite.\n\t4. Entrouvrir les trois portes et attendre.\n" << endl;
+		OutputText("Que voulez-vous faire ?\n\t1. Passer par la porte de gauche.\n\t2. Passer par la porte du milieu.\n\t3. Passer par la porte de droite.\n\t4. Entrouvrir les trois portes et attendre.\n");
 		cin >> choix;
 	} while (!(choix == "1" || choix == "2" || choix == "3" || choix == "4"));
 	if (choix == "4")
 	{
-		cout << "La porte de gauche donne sur un escalier descendant. La porte du milieu sur un couloir parfaitement droit. La porte de gauche donne sur un escalier ascendant. Les trois chemins s'étendent à perte de vue, dans les ténèbres." << endl;
+		OutputText("La porte de gauche donne sur un escalier descendant. La porte du milieu sur un couloir parfaitement droit. La porte de gauche donne sur un escalier ascendant. Les trois chemins s'étendent à perte de vue, dans les ténèbres.");
 		Sleep(3000);
-		cout << "Après avoir attendu quelque instants, vous finissez par discernez une sorte de gargouillement sourd, semblant provenir de quelque part très loin dans l'édifice." << endl;
+		OutputText("Après avoir attendu quelque instants, vous finissez par discernez une sorte de gargouillement sourd, semblant provenir de quelque part très loin dans l'édifice.");
 		Sleep(3000);
 		do
 		{
 			choix = "";
-			cout << "Que voulez-vous faire ?\n\t1. Passer par la porte de gauche.\n\t2. Passer par la porte du milieu.\n\t3. Passer par la porte de droite.\n" << endl;
+			OutputText("Que voulez-vous faire ?\n\t1. Passer par la porte de gauche.\n\t2. Passer par la porte du milieu.\n\t3. Passer par la porte de droite.\n");
 			cin >> choix;
 		} while (!(choix == "1" || choix == "2" || choix == "3"));
 	}
@@ -308,40 +334,36 @@ void porte()
 	if (choix == "2") { nbSalle++; autoToEvent(dirB); }
 	if (choix == "3") { nbSalle++; autoToEvent(dirT); }
 }
-void sourd() //changer nom
+//void sourd() //changer nom
+//{
+//	OutputText("Après avoir passé plusieurs passages exigus et franchi plusieurs couloirs semblant tourner en angle droit sans aucune cohérence architecturale, le passage que vous empruntez débouche enfin sur une grande salle bien plus illuminée que les précédentes.\nCette salle est en effet éclairée par de très longues torches placées très hauts sur les murs.\nVous remarquez en y entrant qu'une personne se trouve ici.\nEn effet, au milieu de cette salle se trouve un homme, immense, longiligne, debout, qui vous fixe.\n Cet homme est séparé du reste de la salle par un gouffre dessinant un carré dans le sol de la salle.\nVous comprenez rapidement qu'il est muet, alors qu'il ne vous semble pas reconnaître cet homme, sans pouvoir vous expliquer comment vous en êtes arrivé à cette conclusion.\nDe plus, une inspection rapide de la salle n'en révèle aucune sortie."); //reconna" << char(140) << "tre
+//	Sleep(5000);
+//	OutputText("Alors que vous faites vos premiers pas dans la salle, vous remarquez une inscription sur le sol, devant vous :\n 'Dites le nom que vous désirez obtenir.'\n");
+//	string nouvNom;
+//	cin >> nouvNom;
+//	if (nouvNom == "Aucun" || nouvNom == "Rien" || nouvNom == " ") { nouvNom = ""; }
+//	sauv.setName(nouvNom);
+//	Sleep(2000);
+//	OutputText("Soudainement, une partie du sol de la salle, qui semblait jusqu’alors commune au reste,\nse dérobe pour révéler un escalier s'enfonçant dans les profondeurs obscures de ces lieux.\nAvant de l'emprunter, vous jetez un dernier regard vers l'homme résidant dans cette salle.\nIl est maintenant assis en tailleur.");
+//}
+void sourdV3()
 {
-	cout << "Après avoir passé plusieurs passages exigus et franchi plusieurs couloirs semblant tourner en angle droit sans aucune cohérence architecturale, le passage que vous empruntez débouche enfin sur une grande salle bien plus illuminée que les précédentes.\nCette salle est en effet éclairée par de très longues torches placées très hauts sur les murs.\nVous remarquez en y entrant qu'une personne se trouve ici.\nEn effet, au milieu de cette salle se trouve un homme, immense, longiligne, debout, qui vous fixe.\n Cet homme est séparé du reste de la salle par un gouffre dessinant un carré dans le sol de la salle.\nVous comprenez rapidement qu'il est muet, alors qu'il ne vous semble pas reconnaître cet homme, sans pouvoir vous expliquer comment vous en êtes arrivé à cette conclusion.\nDe plus, une inspection rapide de la salle n'en révèle aucune sortie." << endl; //reconna" << char(140) << "tre
+	OutputText("Après avoir passé plusieurs passages exigus et franchi plusieurs couloirs semblant tourner en angle droit sans aucune cohérence architecturale, le passage que vous empruntez débouche enfin sur une grande salle bien plus illuminée que les précédentes.\nCette salle est en effet éclairée par de très longues torches placées très hauts sur les murs.\nVous remarquez en y entrant qu'une personne se trouve ici.\nEn effet, au milieu de cette salle se trouve un homme, immense, longiligne, debout, qui vous fixe.\n Cet homme est séparé du reste de la salle par un gouffre dessinant un carré dans le sol de la salle.\nVous comprenez rapidement qu'il est muet, alors qu'il ne vous semble pas reconnaître cet homme, sans pouvoir vous expliquer comment vous en êtes arrivé à cette conclusion.\nDe plus, une inspection rapide de la salle n'en révèle aucune sortie.");
 	Sleep(5000);
-	cout << "Alors que vous faites vos premiers pas dans la salle, vous remarquez une inscription sur le sol, devant vous :\n 'Dites le nom que vous désirez obtenir.'\n" << endl;
+	OutputText("Alors que vous faites vos premiers pas dans la salle, vous remarquez une inscription sur le sol, devant vous :\n 'Dites le nom que vous désirez obtenir.'\n");
 	string nouvNom;
 	cin >> nouvNom;
 	if (nouvNom == "Aucun" || nouvNom == "Rien" || nouvNom == " ") { nouvNom = ""; }
 	sauv.setName(nouvNom);
 	Sleep(2000);
-	cout << "Soudainement, une partie du sol de la salle, qui semblait jusqu’alors commune au reste,\nse dérobe pour révéler un escalier s'enfonçant dans les profondeurs obscures de ces lieux.\nAvant de l'emprunter, vous jetez un dernier regard vers l'homme résidant dans cette salle.\nIl est maintenant assis en tailleur." << endl;
-}
-void sourdV2() //test OutputText
-{
-	cout << "Après avoir passé plusieurs passages exigus et franchi plusieurs couloirs semblant tourner en angle droit sans aucune cohérence architecturale, le passage que vous empruntez débouche enfin sur une grande salle bien plus illuminée que les précédentes.\nCette salle est en effet éclairée par de très longues torches placées très hauts sur les murs.\nVous remarquez en y entrant qu'une personne se trouve ici.\nEn effet, au milieu de cette salle se trouve un homme, immense, longiligne, debout, qui vous fixe.\n Cet homme est séparé du reste de la salle par un gouffre dessinant un carré dans le sol de la salle.\nVous comprenez rapidement qu'il est muet, alors qu'il ne vous semble pas reconnaître cet homme, sans pouvoir vous expliquer comment vous en êtes arrivé à cette conclusion.\nDe plus, une inspection rapide de la salle n'en révèle aucune sortie." << endl; //reconna" << char(140) << "tre
-	string s = "Après avoir passé plusieurs passages exigus et franchi plusieurs couloirs semblant tourner en angle droit sans aucune cohérence architecturale, le passage que vous empruntez débouche enfin sur une grande salle bien plus illuminée que les précédentes.\nCette salle est en effet éclairée par de très longues torches placées très hauts sur les murs.\nVous remarquez en y entrant qu'une personne se trouve ici.\nEn effet, au milieu de cette salle se trouve un homme, immense, longiligne, debout, qui vous fixe.\n Cet homme est séparé du reste de la salle par un gouffre dessinant un carré dans le sol de la salle.\nVous comprenez rapidement qu'il est muet, alors qu'il ne vous semble pas reconnaître cet homme, sans pouvoir vous expliquer comment vous en êtes arrivé à cette conclusion.\nDe plus, une inspection rapide de la salle n'en révèle aucune sortie.";
-	OutputText(s);
-
-	getchar();
-	
-	Sleep(5000);
-	cout << "Alors que vous faites vos premiers pas dans la salle, vous remarquez une inscription sur le sol, devant vous :\n 'Dites le nom que vous désirez obtenir.'\n" << endl;
-	string nouvNom;
-	cin >> nouvNom;
-	if (nouvNom == "Aucun" || nouvNom == "Rien" || nouvNom == " ") { nouvNom = ""; }
-	sauv.setName(nouvNom);
-	Sleep(2000);
-	cout << "Soudainement, une partie du sol de la salle, qui semblait jusqu’alors commune au reste,\nse dérobe pour révéler un escalier s'enfonçant dans les profondeurs obscures de ces lieux.\nAvant de l'emprunter, vous jetez un dernier regard vers l'homme résidant dans cette salle.\nIl est maintenant assis en tailleur." << endl;
+	OutputText("Soudainement, une partie du sol de la salle, qui semblait jusqu’alors commune au reste,\nse dérobe pour révéler un escalier s'enfonçant dans les profondeurs obscures de ces lieux.\nAvant de l'emprunter, vous jetez un dernier regard vers l'homme résidant dans cette salle.\nIl est maintenant assis en tailleur.");
 }
 void aveugle()
 {
-	cout << "Alors que votre avancée vous amène à emprunter un escalier non éclairé,\nvous arrivez dans une salle gigantesque,\noù l'escalier que vous empruntiez semble sortir d'un mur de façon anarchique.\nCette salle, pourtant relativement bien éclairée, ne dispose d'aucunes sources de lumières apparentes.\nVous remarquez en y entrant qu'une personne se trouve ici.\nEn effet, au milieu de cette salle se trouve un homme, maigre, bossu, assis en tailleur, qui semble perdu, regardant alternativement le sol devant lui, et quelque chose d'invisible semblant se mouvoir rapidement dans les airs.\nCet homme est séparé du reste de la salle par un gouffre dessinant un cercle dans le sol de la salle.";
-	if (sauv.getName() != "") { cout << "\nDe plus, vous remarquez que malgré le bandeau sur les yeux de cet homme,\nil se tourne toujours de manière à vous faire face."; }
-	cout << "Une sortie semble présente sous la forme d'un autre escalier non éclairé,\ndont la forme s'oppose fondamentalement à celui par lequel vous êtes arrivés." << endl;
+	string s = "Alors que votre avancée vous amène à emprunter un escalier non éclairé,\nvous arrivez dans une salle gigantesque,\noù l'escalier que vous empruntiez semble sortir d'un mur de façon anarchique.\nCette salle, pourtant relativement bien éclairée, ne dispose d'aucunes sources de lumières apparentes.\nVous remarquez en y entrant qu'une personne se trouve ici.\nEn effet, au milieu de cette salle se trouve un homme, maigre, bossu, assis en tailleur, qui semble perdu, regardant alternativement le sol devant lui, et quelque chose d'invisible semblant se mouvoir rapidement dans les airs.\nCet homme est séparé du reste de la salle par un gouffre dessinant un cercle dans le sol de la salle.";
+	if (sauv.getName() != "") { s += "\nDe plus, vous remarquez que malgré le bandeau sur les yeux de cet homme,\nil se tourne toujours de manière à vous faire face."; }
+	s += "Une sortie semble présente sous la forme d'un autre escalier non éclairé,\ndont la forme s'oppose fondamentalement à celui par lequel vous êtes arrivés.";
+	OutputText(s);
 	//---------------------------------------------------------------
 }
 void diable()
@@ -387,7 +409,7 @@ bool trembler()
 {
 	string response;
 	bool w = false;
-	cout << "La voix reprend alors instantanément :\n 'Je fais trembler les gens depuis la nuit des temps.'\n 'L’homme me combat régulièrement.'\n 'Je crains le soleil.'\n 'Qui suis-je ?'" << endl;
+	OutputText("La voix reprend alors instantanément :\n 'Je fais trembler les gens depuis la nuit des temps.'\n 'L’homme me combat régulièrement.'\n 'Je crains le soleil.'\n 'Qui suis-je ?'");
 	cin >> response;
 	if (response == "Le froid" || response == "Le Froid" || response == "froid" || response == "Froid") { w = true; }
 	return w;
@@ -403,7 +425,7 @@ bool patience()
 	QueryPerformanceFrequency(&frequency);
 	QueryPerformanceCounter(&t1);
 	cin >> rep;
-	getline(cin, rep);
+	std::getline(cin, rep);
 	QueryPerformanceCounter(&t2);
 	double elapsedTime = (t2.QuadPart - t1.QuadPart) * 1000.0 / frequency.QuadPart;
 
@@ -423,29 +445,39 @@ bool patience()
 }
 bool menteur()
 {
-	string response;
+	string choix;
 	bool w = false;
-	cout << "La voix reprend alors instantanément :\n 'J’ai deux pieds,'\n 'Six jambes,'\n 'Huit bras,'\n 'Deux têtes,'\n 'Et un œil.'\n 'Qui suis-je ?'" << endl;
-	cin >> response;
-	if (response == "Un menteur" || response == "Un Menteur" || response == "menteur" || response == "Menteur") { w = true; }
+	OutputText("La voix reprend alors instantanément :\n 'J’ai deux pieds,'\n 'Six jambes,'\n 'Huit bras,'\n 'Deux têtes,'\n 'Et un œil.'\n 'Qui suis-je ?'");
+	//cin >> response;
+	//cout << "ici";
+	//cin.clear();
+	//cin.sync();
+	cin.ignore();
+	std::getline(std::cin, choix);
+	//cout << "ici et " << response;
+	//if (response == "Un menteur" || response == "Un Menteur" || response == "menteur" || response == "Menteur") { w = true; }
+	//if ((string)std::tolower(response) == (string)"Un menteur" || response == "Un Menteur" || response == "menteur" || response == "Menteur") { w = true; }
+	if (vérifierRéponse("Menteur", choix)) { w = true; }
+	cout << w;
 	return w;
 }
 bool souffle()
 {
 	string response;
 	bool w = false;
-	cout << "La voix reprend alors instantanément :\n 'Plus vous courez,'\n 'Moins vous l'aurez,'\n 'Qui suis-je ?'" << endl;
+	OutputText("La voix reprend alors instantanément :\n 'Plus vous courez,'\n 'Moins vous l'aurez,'\n 'Qui suis-je ?'");
 	cin >> response;
-	if (response == "Le souffle" || response == "Le Souffle" || response == "souffle" || response == "Souffle") { w = true; }
+	//if (response == "Le souffle" || response == "Le Souffle" || response == "souffle" || response == "Souffle") { w = true; }
+	if (vérifierRéponse("Souffle", response)) { w = true; }
 	return w;
 }
 void recherche()
 {
 	srand(time(0));
 	string rep = "";
-	cout << "Alors que vous marchez dans un couloir étroit,\net que vous suivez un changement de direction,\nvous vous retrouvez dans une impasse.\nAvant de pouvoir réagir, vous vous retrouvez enfermés,\nalors que les murs se déplacent pour vous empêcher de revenir sur vos pas." << endl;
+	OutputText("Alors que vous marchez dans un couloir étroit,\net que vous suivez un changement de direction,\nvous vous retrouvez dans une impasse.\nAvant de pouvoir réagir, vous vous retrouvez enfermés,\nalors que les murs se déplacent pour vous empêcher de revenir sur vos pas.");
 	Sleep(5000);
-	cout << "\nUn instant après la fin de ce vacarme,\nvous entendez une voix assourdissante :\n 'Énigme, ou Offrande.'" << endl;
+	OutputText("\nUn instant après la fin de ce vacarme,\nvous entendez une voix assourdissante :\n 'Énigme, ou Offrande.'");
 	cin >> rep;
 	if (rep == "Énigme" || rep == "Enigme" || rep == "énigme" || rep == "enigme")
 	{
@@ -460,7 +492,7 @@ void recherche()
 	}
 	else
 	{
-		cout << "La voix reprend :\n 'Quel objet ?'" << endl; //verbeux
+		OutputText("La voix reprend :\n 'Quel objet ?'"); //verbeux
 		sauv.afficherInv();
 		string offr;
 		cin >> offr;
@@ -476,9 +508,9 @@ void recherche()
 }
 void deite() //Punition pour event 20 à 29
 {
-	cout << "Alors que vous luttez pour prendre des repères dans cet endroit entièrement sombre, un écho se fait entendre, suivi par l'apparition d'une faible lueur verte." << endl;
+	OutputText("Alors que vous luttez pour prendre des repères dans cet endroit entièrement sombre, un écho se fait entendre, suivi par l'apparition d'une faible lueur verte.");
 	Sleep(3000);
-	cout << "Devant vous se trouve un bas-relief imposant, couvrant l'entièreté du mur vous faisant face. Cette salle est une salle rectangulaire aux proportions démesurées, que ce soit dans sa hauteur, ou dans sa largeur dont vous ne pouvez pas apercevoir les extremités dans l'obscurité." << endl; // Bas-relief
+	OutputText("Devant vous se trouve un bas-relief imposant, couvrant l'entièreté du mur vous faisant face. Cette salle est une salle rectangulaire aux proportions démesurées, que ce soit dans sa hauteur, ou dans sa largeur dont vous ne pouvez pas apercevoir les extremités dans l'obscurité."); // Bas-relief
 	string s =
 		"Devant vous se trouve un bas-relief imposant, couvrant l'entièreté du mur vous faisant face. Cette salle est une salle rectangulaire aux proportions démesurées, que ce soit dans sa hauteur, ou dans sa largeur dont vous ne pouvez pas apercevoir les extremités dans l'obscurité. "
 		"La lueur verte, qui se trouve à votre exacte opposé dans le mur du bas-relief, est bientôt rejointe par ce qui semble être une infinité d'autres, et vous commencez à apercevoir les contours des formes qui compose cette sculpture. "
@@ -540,10 +572,10 @@ void etroit()
 	}
 
 	Sleep(5000);
-	cout << "Le passage qui s'offre maintenant à vous n'est pas éclairé";
-	if (sauv.getInvDisp(3) == true) { cout << ", \net suis une pente douce à travers le grès et l'argile." << endl; }
-	else { cout << "." << endl; }
-	cout << "Vous n'avez d'autre choix que de le parcourir, et, \nce qui s'apparente à un couloir aussi haut que large\ndevient vite étouffant alors que \nsa taille semble se réduire continuellement\nalors que vous y progressez." << endl;
+	string s = "Le passage qui s'offre maintenant à vous n'est pas éclairé";
+	if (sauv.getInvDisp(3) == true) { s += ", \net suis une pente douce à travers le grès et l'argile."; OutputText(s); }
+	else { s += "."; OutputText(s); }
+	OutputText("Vous n'avez d'autre choix que de le parcourir, et, \nce qui s'apparente à un couloir aussi haut que large\ndevient vite étouffant alors que \nsa taille semble se réduire continuellement\nalors que vous y progressez.");
 	cout << "test" << endl;
 	mciSendString(_T("open \"Disasterpiece - Vignette Visions.mp3\" type mpegvideo alias mp3"), NULL, 0, NULL);
 	mciSendString(_T("play mp3"), NULL, 0, NULL);
@@ -571,14 +603,13 @@ void mort()
 	while (!(choix == "7"))
 	{
 		if (choix == "1") { nombre++; }
-		else if (choix == "2") { nombre--; }
+		else if (choix == "2") { if (nombre == 0) cout << "Ce vase est actuellement vide." << endl; else nombre--; }
 		else if (choix == "3") { nombre += 5; }
 		else if (choix == "4") { nombre += 10; }
 		else if (choix == "5") { if (sauv.getInvDisp(8) == false) { sauv.setInvUn(9); string eu = "Vous prenez quelques billes et les mettez dans votre sac. Au bruit ambient s'ajoute plusieurs bourdonnements et un écho assourdissant."; OutputText(eu); } else { string nonEu = "Vous possédez déjà dans votre sac des billes similaires, et leurs poids vous font rapidement changer d'avis. Mieux vaut ne pas en emporter plus."; OutputText(nonEu); } }
 		else if (choix == "6") { cout << "nombre" << nombre << endl; cout << "nbEssai" << sauv.getTry() << endl; if (nombre == sauv.getTry()) { résolu = true; } break; }
 
-		s = "Que voulez vous faire d'autre ? \n\t1. Ajouter une bille dans le vase. \n\t2. Retirer une bille du vase. \n\t3. Ajouter cinq billes dans le vase. \n\t4. Ajouter dix billes dans le vase. \n\t5. Prendre une poignée de billes dans votre sac. \n\t6. Briser le vase. \n\t7. Repartir.";
-		OutputText(s);
+		OutputText("\nQue voulez vous faire d'autre ? \n\t1. Ajouter une bille dans le vase. \n\t2. Retirer une bille du vase. \n\t3. Ajouter cinq billes dans le vase. \n\t4. Ajouter dix billes dans le vase. \n\t5. Prendre une poignée de billes dans votre sac. \n\t6. Briser le vase. \n\t7. Repartir.");
 		cin >> choix;
 	}
 	if (résolu == true) { cout << "resolu" << endl; } //revele un truc, et les bourdonnements déjà présent deviennent rapidement de plus en plus fort jusqu'à faire, vous poussant à sortir
@@ -662,14 +693,14 @@ void toEvent()
 	cout << nbSalle << endl;
 	cout << (events[dir][1] == "n") << endl;
 	cout << (events[dir][1] == "y") << endl;
-	{
-		if (dir == 0) { passerelle(); events[dir][1] = "n"; nbSalle++; }
-		if (dir == 1) { conservation(); events[dir][1] = "n"; nbSalle++; }
-		if (dir == 2) { porte(); nbSalle++; }
-		if (dir == 3) { aveugle(); events[dir][1] = "n"; nbSalle++; }
-		if (dir == 4) { sourd(); events[dir][1] = "n"; nbSalle++; }
-		if (dir == 5) { mort(); events[dir][1] = "n"; nbSalle++; }
-	}
+	//{
+	//	if (dir == 0) { passerelle(); events[dir][1] = "n"; nbSalle++; }
+	//	if (dir == 1) { conservation(); events[dir][1] = "n"; nbSalle++; }
+	//	if (dir == 2) { porte(); nbSalle++; }
+	//	if (dir == 3) { aveugle(); events[dir][1] = "n"; nbSalle++; }
+	//	if (dir == 4) { sourdV3(); events[dir][1] = "n"; nbSalle++; }
+	//}
+	autoToEvent(dir);
 }
 void autoToEvent(int dir)
 {
@@ -677,7 +708,9 @@ void autoToEvent(int dir)
 	if (dir == 1) { conservation(); events[dir][1] = "n"; nbSalle++; }
 	if (dir == 2) { porte(); nbSalle++; }
 	if (dir == 3) { aveugle(); events[dir][1] = "n"; nbSalle++; }
-	if (dir == 4) { sourd(); events[dir][1] = "n"; nbSalle++; }
+	if (dir == 4) { sourdV3(); events[dir][1] = "n"; nbSalle++; }
+	if (dir == 5) { mort(); events[dir][1] = "n"; nbSalle++; }
+	if (dir == 20) { recherche(); events[dir][1] = "n"; nbSalle++; }
 }
 
 
@@ -758,7 +791,7 @@ void saveToGame()
 
 	sauv.setName(n);
 	//cout << n << endl;
-	sauv.setTry(e);
+	sauv.setTry(e); // --------------- Run-Time Check Failure #3 - The variable 'e' is being used without being initialized.
 	//cout << (char)e << endl;
 	//Sleep(3000);
 	/*for each (string s in inv)
@@ -928,20 +961,21 @@ void Titre()
 }
 void Intro()
 {
-	cout << "Les ténèbres vous entourent." << endl;
+	OutputText("Les ténèbres vous entourent.");
 	for (int i = 0; i < 3; i++) { /*Sleep(3000);*/ cout << "." << endl; }
-	cout << "Une douce chaleur vous réveille." << endl;
+	OutputText("Une douce chaleur vous réveille.");
 	for (int i = 0; i < 3; i++) { /*Sleep(3000);*/ cout << "." << endl; }
-	cout << "Vous entendez une voix." << endl; /*Sleep(3000);*/ cout << "Cette voix semble à la fois distante et proche.\nVous vous trouvez dans un lieu qui vous est inconnu, dans la pénombre,\net vous n'arrivez pas à discerner quoi que ce soit autour de vous." << endl; Sleep(3000);
-	cout << "\'Quel est votre nom ?\'" << endl;
+	OutputText("Vous entendez une voix."); /*Sleep(3000);*/ OutputText("Cette voix semble à la fois distante et proche.\nVous vous trouvez dans un lieu qui vous est inconnu, dans la pénombre, \net vous n'arrivez pas à discerner quoi que ce soit autour de vous."); Sleep(3000);
+	//cout << "\'Quel est votre nom ?\'" << endl;
+	OutputText("\n\'Quel est votre nom ?\'");
 	string nom;
 	cin >> nom;
 	sauv.setName(nom);
-	cout << "\'Non.\'" << endl;
+	OutputText("\'Non.\'");
 	Sleep(500);
-	cout << "\'Cela n'a aucune importance\'." << endl;
+	OutputText("\'Cela n'a aucune importance\'.");
 	Sleep(500);
-	cout << "Vous vous rendormez instantanément, comme frappé d'une fatigue soudaine,\nmais pas sans discerner une silhouette se tenant\nau dessus de vous au moment où vous sombrez." << endl;
+	OutputText("Vous vous rendormez instantanément, comme frappé d'une fatigue soudaine,\nmais pas sans discerner une silhouette se tenant\nau dessus de vous au moment où vous sombrez.");
 	Sleep(3000);
 }
 
@@ -1134,12 +1168,6 @@ int main()
 
 		//diable();
 
-		saveToGame();
-		sauv.afficherInvDet();
-		mort();
-		sauv.afficherInvDet();
-		sauv.afficherInvDet();
-
 		//sourdV2(); //OutputText
 
 		//Rectangle(GetDC(hwnd),10,10,5,5);
@@ -1165,6 +1193,48 @@ int main()
 		sauv.afficherInv();
 		cout << test << endl;*/
 
+		//saveToGame();
+		//sauv.afficherInvDet();
+		//mort();
+		//sauv.afficherInvDet();
+		//sauv.afficherInvDet();
+
+		/*saveToGame();*/
+		//sauv.setTry(0);
+		//mort();
+		//sauv.setTry(1);
+		//mort();
+
+		//menteur();
+		bool w = false;
+		if (vérifierRéponse("Menteur", "Menteur")) { w = true; }
+		else { w = false; }
+		cout << w << endl;
+		if (vérifierRéponse("Menteur", "menteur")) { w = true; }
+		else { w = false; }
+		cout << w << endl;
+		if (vérifierRéponse("Un menteur", "Un menteur")) { w = true; }
+		else { w = false; }
+		cout << w << endl;		
+		if (vérifierRéponse("Menteur", "Un menteur")) { w = true; }
+		else { w = false; }
+		cout << w << endl;
+		if (vérifierRéponse("Menteur", "Un Menteur")) { w = true; }
+		else { w = false; }
+		cout << w << endl;
+		if (vérifierRéponse("Menteur", "le menteur")) { w = true; }
+		else { w = false; }
+		cout << w << endl;
+		if (vérifierRéponse("Menteur", "test")) { w = true; }
+		else { w = false; }
+		cout << w << endl;
+		if (vérifierRéponse("Menteur", "menteur le")) { w = true; }
+		else { w = false; }
+		cout << w << endl;
+		if (vérifierRéponse("Menteur", "le manteur")) { w = true; }
+		else { w = false; }
+		cout << w << endl;
+
 		break;
 	}	
 	default:
@@ -1175,3 +1245,4 @@ int main()
 
 //sauvegarde corrompu en ajoutant de nouveaux objets ? -> résolu parce qu'en plus des deux constructeurs il faut changer la liste d'inventaire d'initialisation initInv
 //torche qui fait avancer plus vite ?
+//Don't forget you can do: "using std::cout;" which means you don't have to type std::cout, but don't bring in the entire std namespace at the same time.
